@@ -1,2 +1,14 @@
 from PIL import Image
-import sys
+from operator import itemgetter
+
+im = Image.open("captcha.jpeg")
+im = im.convert("P")
+his = im.histogram()
+
+values = {}
+
+for i in range(256):
+    values[i] = his[i]
+
+for j,k in sorted(values.items(), key=itemgetter(1), reverse=True)[:10]:
+    print (j,k)
