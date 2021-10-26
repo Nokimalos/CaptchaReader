@@ -1,7 +1,7 @@
 from PIL import Image
 from operator import itemgetter
 
-im = Image.open("captcha.jpeg")
+im = Image.open("captcha.gif")
 im = im.convert("P")
 his = im.histogram()
 
