@@ -7,12 +7,12 @@ converted_img = Image.new("P", img.size, 255) #Create the output image
 
 hist = img.histogram() #Do the histogram to see the greatest number of pixels
 
-def putPixelOutpoutImage():
+def putPixelOutpoutImage(addpixel):
     values = {} #Create an array that will store the values
     for i in range(256):
         values[i] = hist[i] #Store the value
 
-    for j,k in sorted(values.items(), key = itemgetter(1), reverse = True)[:2]: #Define a variable between the brackets and increment it each time the AI ​​fails
+    for j in sorted(values.items(), key = itemgetter(1), reverse = True)[addpixel]: #Define a variable between the brackets and increment it each time the AI ​​fails
         #Image path
         for x in range(img.size[1]):
             for y in range(img.size[0]):
@@ -24,4 +24,4 @@ def putPixelOutpoutImage():
     return 0
 
 
-putPixelOutpoutImage()
+putPixelOutpoutImage(2)
