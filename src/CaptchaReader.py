@@ -8,6 +8,12 @@ HELP = "USAGE = The first argument is the execution binary of the program.\n"\
     "\tThe second argument is the path of the captcha for the Captcha reader.\n"\
     "EXECUTION = python3 elevator [path of the captcha : \"../captcha/different_pixel_captcha.PNG\"]\n"\
 
+BAD_ARG = "There can only be 2 arguments ! Please do : python3 CaptchaReader \"-help\" for more informations.\n"\
+
+FILE_NOT_FOUND = "This file doesn't exist ! Please retry with a functionnal Captcha.\n"\
+    
+EMPTY_FILE = "This file is empty ! Please try with a good captcha.\n"\
+
 def putPixelOutpoutImage(addpixel, img, converted_img, hist):
     values = {} #Create an array that will store the values
     for i in range(256):
@@ -28,14 +34,16 @@ if __name__ == '__main__':
     if len(sys.argv) == 2 and sys.argv[1] == "-help":
         print(HELP)
     elif len(sys.argv) != 2:
-        print("There can only be 2 arguments ! Please do : python3 CaptchaReader \"-help\" for mor informations. \n")
+        print(BAD_ARG)
     else:
         if (os.path.isfile(sys.argv[1]) == False):
-            print("This file doesn't exist ! Please retry with a functionnal Captcha.\n")
-        else:
+            print(FILE_NOT_FOUND)
+        elif (os.path.isfile(sys.argv[1]) == True and os.path.getsize(sys.argv[1]) > 0):
             img = Image.open(sys.argv[1]) #Open the captcha
             img = img.convert("L") #Convert image to grayscale
             converted_img = Image.new("P", img.size, 255) #Create the output image
             hist = img.histogram() #Do the histogram to see the greatest number of pixels
     
             putPixelOutpoutImage(2, img, converted_img, hist)
+        else:
+            print(EMPTY_FILE)
