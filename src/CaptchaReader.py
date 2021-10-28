@@ -1,13 +1,14 @@
+import sys
+import os.path
+
 from PIL import Image
 from operator import itemgetter
 
-img = Image.open("../captcha/different_pixel_captcha.PNG") #Open the captcha
-img = img.convert("L") #Convert image to grayscale
-converted_img = Image.new("P", img.size, 255) #Create the output image   
+HELP = "USAGE = The first argument is the execution binary of the program.\n"\
+    "\tThe second argument is the path of the captcha for the Captcha reader.\n"\
+    "EXECUTION = python3 elevator [path of the captcha : \"../captcha/different_pixel_captcha.PNG\"]\n"\
 
-hist = img.histogram() #Do the histogram to see the greatest number of pixels
-
-def putPixelOutpoutImage(addpixel):
+def putPixelOutpoutImage(addpixel, img, converted_img, hist):
     values = {} #Create an array that will store the values
     for i in range(256):
         values[i] = hist[i] #Store the value
@@ -16,11 +17,25 @@ def putPixelOutpoutImage(addpixel):
         #Image path
         for x in range(img.size[1]):
             for y in range(img.size[0]):
-                pix = img.getpixel((y,x))# Take the pixel
+                pix = img.getpixel((y,x)) # Take the pixel
                 if pix == j: # If the pixel is within the range of the greatest number of pixels
                     converted_img.putpixel((y,x),0) #Put the pixel on the new image
 
     converted_img.save("output.gif") #Save the new image
     return 0
 
-putPixelOutpoutImage(2)
+if __name__ == '__main__':
+    if len(sys.argv) == 2 and sys.argv[1] == "-help":
+        print(HELP)
+    elif len(sys.argv) != 2:
+        print("There can only be 2 arguments ! Please do : python3 CaptchaReader \"-help\" for mor informations. \n")
+    else:
+        if (os.path.isfile(sys.argv[1]) == False):
+            print("This file doesn't exist ! Please retry with a functionnal Captcha.\n")
+        else:
+            img = Image.open(sys.argv[1]) #Open the captcha
+            img = img.convert("L") #Convert image to grayscale
+            converted_img = Image.new("P", img.size, 255) #Create the output image
+            hist = img.histogram() #Do the histogram to see the greatest number of pixels
+    
+            putPixelOutpoutImage(2, img, converted_img, hist)
