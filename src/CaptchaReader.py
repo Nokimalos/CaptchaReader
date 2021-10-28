@@ -12,7 +12,7 @@ def putPixelOutpoutImage(addpixel):
     for i in range(256):
         values[i] = hist[i] #Store the value
 
-    for j in sorted(values.items(), key = itemgetter(1), reverse = True)[addpixel]: #Define a variable between the brackets and increment it each time the AI ​​fails
+    for j,k in sorted(values.items(), key = itemgetter(1), reverse = True)[:addpixel]: #Define a variable between the brackets and increment it each time the AI ​​fails
         #Image path
         for x in range(img.size[1]):
             for y in range(img.size[0]):
@@ -22,6 +22,5 @@ def putPixelOutpoutImage(addpixel):
 
     converted_img.save("output.gif") #Save the new image
     return 0
-
 
 putPixelOutpoutImage(2)
