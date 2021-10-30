@@ -40,15 +40,11 @@ if __name__ == '__main__':
             print(FILE_NOT_FOUND)
         elif (os.path.isfile(sys.argv[1]) == True and os.path.getsize(sys.argv[1]) > 0):
             img = Image.open(sys.argv[1]) #Open the captcha
+            img = img.resize((400,100)) #Resize the image
             img = img.convert("L") #Convert image to grayscale
             converted_img = Image.new("P", img.size, 255) #Create the output image
             hist = img.histogram() #Do the histogram to see the greatest number of pixels
-    
+
             putPixelOutpoutImage(2, img, converted_img, hist)
         else:
             print(EMPTY_FILE)
-
-def resizeImage(img, converted_img):
-    img = Image.open("../captcha/normal_captcha.PNG")
-    converted_img = img.resize((400,100))
-    converted_img.save("output.gif")
