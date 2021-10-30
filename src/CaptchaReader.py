@@ -47,3 +47,8 @@ if __name__ == '__main__':
             putPixelOutpoutImage(2, img, converted_img, hist)
         else:
             print(EMPTY_FILE)
+
+def resizeImage(img, converted_img):
+    img = Image.open("../captcha/normal_captcha.PNG")
+    converted_img = img.resize((400,100))
+    converted_img.save("output.gif")
